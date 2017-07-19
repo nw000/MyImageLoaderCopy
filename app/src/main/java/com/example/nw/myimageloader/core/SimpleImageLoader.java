@@ -1,11 +1,13 @@
 package com.example.nw.myimageloader.core;
 
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.example.nw.myimageloader.config.DisplayConfig;
 import com.example.nw.myimageloader.config.SimpleImageLoaderConfig;
 import com.example.nw.myimageloader.listener.ImageLoaderListener;
 import com.example.nw.myimageloader.listener.SimpleImageLoaderListener;
+import com.example.nw.myimageloader.request.BitmapRequest;
 import com.example.nw.myimageloader.utils.L;
 
 /**
@@ -66,11 +68,26 @@ public class SimpleImageLoader {
         displayImage(url, imageView, config, null);
     }
 
-    private void displayImage(String url, ImageView imageView, DisplayConfig config, ImageLoaderListener listener) {
+    private void displayImage(String url, ImageView imageView, DisplayConfig displayConfig, ImageLoaderListener listener) {
         checkConfiguration();
+        if (imageView == null) {
+            throw new IllegalArgumentException(ERROR_WRONG_ARGUMENTS);
+        }
+        if (displayConfig == null) {
+            displayConfig = config.displayConfig;
+        }
         if (listener == null) {
             listener = defaultListener;
         }
+        if (TextUtils.isEmpty(url)) {
+            listener.onLoadingStart(url, imageView);
+            imageView.setImageDrawable(displayConfig.getImageForEmptyUri(config.res));
+            listener.onLoadingComplete(url, imageView, null);
+            return;
+        }
+        BitmapRequest bitmapRequest = new BitmapRequest(url, imageView, displayConfig, listener);
+
+
 
     }
 
