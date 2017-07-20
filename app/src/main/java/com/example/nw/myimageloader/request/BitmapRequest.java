@@ -4,7 +4,9 @@ import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.example.nw.myimageloader.config.DisplayConfig;
+import com.example.nw.myimageloader.core.SimpleImageLoader;
 import com.example.nw.myimageloader.listener.ImageLoaderListener;
+import com.example.nw.myimageloader.policy.LoadPolicy;
 import com.example.nw.myimageloader.utils.ImageViewHelper;
 import com.example.nw.myimageloader.utils.Md5Helper;
 
@@ -14,13 +16,15 @@ import java.lang.ref.WeakReference;
  * Created by nw on 17/7/19.
  */
 
-public class BitmapRequest implements Comparable<BitmapRequest>{
+public class BitmapRequest implements Comparable<BitmapRequest> {
 
-    private final WeakReference<ImageView> imageViewWeakReference;
-    private final String imageUriMD5;
-    private final String url;
-    private final DisplayConfig displayConfig;
-    private final ImageLoaderListener listener;
+    public final WeakReference<ImageView> imageViewWeakReference;
+    public final String imageUriMD5;
+    public final String url;
+    public final DisplayConfig displayConfig;
+    public final ImageLoaderListener listener;
+
+    public final LoadPolicy policy = SimpleImageLoader.getInstance().config.loadPolicy;
 
     public BitmapRequest(String url, ImageView imageView, DisplayConfig displayConfig, ImageLoaderListener listener) {
         this.url = url;
@@ -66,8 +70,8 @@ public class BitmapRequest implements Comparable<BitmapRequest>{
 
 
     @Override
-    public int compareTo(@NonNull BitmapRequest o) {
-        return 0;
+    public int compareTo(@NonNull BitmapRequest request) {
+        return policy.compare(this, request);
     }
 
     @Override

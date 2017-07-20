@@ -27,7 +27,7 @@ public class SimpleImageLoader {
     private static final String ERROR_NOT_INIT = "ImageLoader must be init with configuration before using";
     private static final String ERROR_INIT_CONFIG_WITH_NULL = "ImageLoader configuration can not be initialized with null";
 
-    private SimpleImageLoaderConfig config;
+    public SimpleImageLoaderConfig config;
     private ImageLoaderListener defaultListener = new SimpleImageLoaderListener();
 
     private static volatile SimpleImageLoader mInstance;

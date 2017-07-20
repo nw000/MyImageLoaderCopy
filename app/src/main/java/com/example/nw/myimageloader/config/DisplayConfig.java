@@ -8,12 +8,12 @@ import android.graphics.drawable.Drawable;
  */
 
 public class DisplayConfig {
-    private final int imageResOnLoading;
-    private final int imageResForEmptyUri;
-    private final int imageResOnFail;
-    private final Drawable imageOnLoading;
-    private final Drawable imageForEmptyUri;
-    private final Drawable imageOnFail;
+    public final int imageResOnLoading;
+    public final int imageResForEmptyUri;
+    public final int imageResOnFail;
+    public final Drawable imageOnLoading;
+    public final Drawable imageForEmptyUri;
+    public final Drawable imageOnFail;
 
     private DisplayConfig(Builder builder) {
         imageResOnLoading = builder.imageResOnLoading;
